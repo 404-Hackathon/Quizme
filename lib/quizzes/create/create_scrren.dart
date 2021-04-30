@@ -10,9 +10,6 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
-  // final _formKey = GlobalKey<FormState>();
-
-  // bool editModeIsEnabled = true;
 
   String name = '';
   String question = '';
@@ -38,7 +35,6 @@ class _CreatePageState extends State<CreatePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: TextFormField(
-          // enabled: editModeIsEnabled,
           onChanged: (val) {
             setState(() {
               name = val;
@@ -55,28 +51,12 @@ class _CreatePageState extends State<CreatePage> {
             hintText: 'Enter Your Quiz Name',
           ),
         ),
-        // iconTheme: IconTheme(),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          /*IconButton(
-            icon: Icon(
-              editModeIsEnabled ? Icons.edit_rounded : Icons.edit_outlined,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              setState(() {
-                // editModeIsEnabled
-                //     ? editModeIsEnabled = false
-                //     : editModeIsEnabled = true;
-              });
-            },
-          ),*/
-        ],
       ),
       body: PageView(
         controller: controller,
@@ -174,7 +154,6 @@ class _CreatePageState extends State<CreatePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: GestureDetector(
                           onTap: () {
-                            // if (_formKey.currentState.validate()) {
                             setState(() {
                               numberOfPages += 1;
                               questions.add(
@@ -192,7 +171,6 @@ class _CreatePageState extends State<CreatePage> {
                             controller.nextPage(
                                 duration: Duration(seconds: 1),
                                 curve: Curves.fastOutSlowIn);
-                            // }
                           },
                           child: Container(
                             height: 50,
@@ -220,10 +198,19 @@ class _CreatePageState extends State<CreatePage> {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            // if (_formKey.currentState.validate()) {
-                            // setState(() {
-                            //   numberOfPages += 1;
-                            // });
+                            setState(() {
+                              questions.add(
+                                Questions(
+                                  question: question,
+                                  options: {
+                                    field1Text: field1,
+                                    field2Text: field2,
+                                    field3Text: field3,
+                                    field4Text: field4,
+                                  },
+                                ),
+                              );
+                            });
                             quizzes.add(
                               Quiz(
                                   name: name,

@@ -1,10 +1,10 @@
 class Quiz {
   final String name;
   final List<Questions> questions;
-  final List<Results> userResults;
+  List<Results> userResults = [];
   final int id;
 
-  Quiz({this.id, this.userResults, this.name, this.questions});
+  Quiz({this.id, this.name, this.questions});
 }
 
 class Questions {
@@ -61,5 +61,5 @@ List<Results> testQuizResults = [
 ];
 
 List<Quiz> quizzes = [
-  Quiz(name: 'Test 1', questions: _questions, userResults: testQuizResults, id: 1)
+  Quiz(name: 'Test 1', questions: _questions, id: 1)
 ];

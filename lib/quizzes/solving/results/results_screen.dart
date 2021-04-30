@@ -43,23 +43,80 @@ class _ResultPageState extends State<ResultPage>
             widget.results.answers.length) *
         100;
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            CustomPaint(
-              foregroundPainter: CircleProgress(animation.value),
-              child: Container(
-                width: 200,
-                height: 200,
-                child: Center(
-                  child: Text(
-                    "${percent.round()}%",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Spacer(),
+              CustomPaint(
+                foregroundPainter: CircleProgress(animation.value),
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Center(
+                    child: Text(
+                      "${percent.round()}%",
+                      style:
+                          TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 50,
+                    // width: 200,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Show More Results!",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              ),
+                        ),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: 100,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Done!",
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        // color: Colors.blueAccent,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                  ),
+                ),
+              ),
+              Spacer(flex: 2,),
+            ],
+          ),
         ),
       ),
     );

@@ -139,6 +139,8 @@ class _QuizPageState extends State<QuizPage> {
                         buttonHeight: 50,
                         // buttonWidth: 200,
                         onSelected: (index, isSelected) {
+                          int counter = 0;
+
                           bool isTrue =
                               quiz.questions[qIndex].options[options[index]];
                           print('$index button is selected');
@@ -151,19 +153,6 @@ class _QuizPageState extends State<QuizPage> {
                                 duration: Duration(seconds: 1),
                                 curve: Curves.fastOutSlowIn);
                           } else {
-                            int counter = 0;
-                            for (var i in answers) {
-                              if (i.correct) {
-                                counter += 1;
-                              }
-                            }
-                            setState(() {
-                              quizzes[quiz.id - 1].userResults.add(Results(
-                                  answers: answers,
-                                  numberOfCorrectAnswers: counter,
-                                  totalTime: '5:30'));
-                            });
-
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return ResultPage(
@@ -174,7 +163,17 @@ class _QuizPageState extends State<QuizPage> {
                               );
                             }));
                           }
-
+                          for (var i in answers) {
+                            if (i.correct) {
+                              counter += 1;
+                            }
+                          }
+                          setState(() {
+                            quizzes[quiz.id - 1].userResults.add(Results(
+                                answers: answers,
+                                numberOfCorrectAnswers: counter,
+                                totalTime: '5:30'));
+                          });
                           // print(options[index]);
                           // print(isTrue);
                         },
