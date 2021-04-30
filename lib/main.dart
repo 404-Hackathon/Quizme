@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quizme/quizzes/create/create_scrren.dart';
 import 'quizzes/quizzes_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,11 +12,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyApp',
+      theme: ThemeData(
+        fontFamily: GoogleFonts.nunito().fontFamily
+      ),
       // home: QuizzesPage(),
       initialRoute: '/',
       routes: {
         '/': (context) => MainPage(),
-        '/quizzes': (context) => QuizzesPage()
+        '/quizzes': (context) => QuizzesPage(),
+        '/create': (context) => CreatePage(),
       },
     );
   }
@@ -39,14 +45,14 @@ List<Widget> _buildScreens() {
  List<PersistentBottomNavBarItem> _navBarsItems() {
         return [
             PersistentBottomNavBarItem(
-                icon: Icon(Icons.home),
-                title: ("Home"),
+                icon: Icon(Icons.library_books_rounded),
+                title: ("Quizzes"),
                 activeColorPrimary: Colors.blue,
                 inactiveColorPrimary: Colors.grey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(Icons.settings),
-                title: ("Settings"),
+                icon: Icon(Icons.insert_chart_rounded),
+                title: ("Analytics"),
                 activeColorPrimary: Colors.blue,
                 inactiveColorPrimary: Colors.grey,
             ),
