@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizme/quiz.dart';
+import 'package:quizme/quizzes/quizzes_screen.dart';
 
 import 'circle.dart';
 
@@ -76,10 +77,10 @@ class _ResultPageState extends State<ResultPage>
                         child: Text(
                           "Show More Results!",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              ),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
                         ),
                       ),
                     ),
@@ -92,7 +93,10 @@ class _ResultPageState extends State<ResultPage>
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => QuizzesPage()));
+                  },
                   child: Container(
                     width: 100,
                     child: Center(
@@ -114,7 +118,9 @@ class _ResultPageState extends State<ResultPage>
                   ),
                 ),
               ),
-              Spacer(flex: 2,),
+              Spacer(
+                flex: 2,
+              ),
             ],
           ),
         ),

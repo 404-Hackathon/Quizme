@@ -70,7 +70,7 @@ class _QuizzesPageState extends State<QuizzesPage> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => QuizPage(quiz: quizzes[index],),
