@@ -25,7 +25,9 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   google_fonts: ^2.0.0
+  group_button: ^2.1.0
   persistent_bottom_nav_bar: ^4.0.2
+  stop_watch_timer: ^1.1.0+1
 
 dev_dependencies:
   flutter_test:

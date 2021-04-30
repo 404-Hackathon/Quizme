@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizme/quiz.dart';
+import 'package:quizme/quizzes/quizzes_screen.dart';
 
 class CreatePage extends StatefulWidget {
   CreatePage({Key key}) : super(key: key);
@@ -51,13 +52,15 @@ class _CreatePageState extends State<CreatePage> {
             // fontSize: 36,
           ),
           decoration: InputDecoration.collapsed(
-            hintText: 'New Quiz',
+            hintText: 'Enter Your Quiz Name',
           ),
         ),
         // iconTheme: IconTheme(),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         actions: [
           /*IconButton(
@@ -222,9 +225,17 @@ class _CreatePageState extends State<CreatePage> {
                             //   numberOfPages += 1;
                             // });
                             quizzes.add(
-                              Quiz(name: name, questions: questions),
+                              Quiz(
+                                  name: name,
+                                  questions: questions,
+                                  id: quizzes.length + 1),
                             );
-                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => QuizzesPage()),
+                            ).then((value) => setState(() {}));
+
                             // }
                           },
                           child: Container(
