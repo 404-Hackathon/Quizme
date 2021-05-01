@@ -1,5 +1,4 @@
 
-
 class Quiz {
   final String name;
   final List<Questions> questions;
@@ -17,6 +16,13 @@ class Quiz {
 
   //   }
   // }
+  //
+  Map toJson() => {
+        'name': name,
+        'questions': [
+          {'question': questions}
+        ]
+      };
 }
 
 class Questions {

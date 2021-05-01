@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:quizme/quiz.dart';
@@ -16,14 +14,13 @@ class QuizzesPage extends StatefulWidget {
 }
 
 class _QuizzesPageState extends State<QuizzesPage> {
-  // int attempts = 0;
-  // double avrage = 0;
+  int attempts = 0;
+  double avrage = 0.0;
 
-  // Future<void> setAvrageAndAttempts() async {
-  //   attempts = await _readAttempts();
-  //   avrage = await _readAvrage();
-  //   setState(() {});
-  // }
+  Future<void> setAvrageAndAttempts() async {
+    attempts = await _readAttempts();
+    avrage = await _readAvrage();
+  }
 
   @override
   void initState() {
@@ -49,6 +46,27 @@ class _QuizzesPageState extends State<QuizzesPage> {
           child: Text('Save'),
           onPressed: () {
             // _save();
+            if (quizzes.length != null && quizzes.length != 0) {
+              // _save(
+              //   number_of_attempts: List.generate(quizzes.length, (index) {
+              //     return '${quizzes[index].userResults.length}';
+              //   }),
+              //   number_of_correctAnswers:
+              //       List.generate(quizzes.length, (index) {
+              //     var counter = 0;
+              //     for (var i in quizzes[index].userResults) {
+              //       counter += i.numberOfCorrectAnswers;
+              //     }
+              //     return '${counter / quizzes[index].questions.length}';
+              //   }),
+              // );setAvrageAndAttempts
+              // 
+              setAvrageAndAttempts();
+              // 
+              // setState(() {
+              // setAvrageAndAttempts();
+              // });
+            }
           },
         ),
         actions: [
@@ -79,7 +97,10 @@ class _QuizzesPageState extends State<QuizzesPage> {
             child: quizzes.length == null || quizzes.length == 0
                 ? TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreatePage()));
                     },
                     child: Text(
                       'Click to Create Quiz!',
@@ -91,24 +112,14 @@ class _QuizzesPageState extends State<QuizzesPage> {
                         ? 1
                         : quizzes.length,
                     itemBuilder: (context, index) {
-                      int correctAnswers = 0;
-                                  // int totalNumberOfAsnwers = 0;
-                                  for (var i in quizzes[index].userResults) {
-                                    correctAnswers += i.numberOfCorrectAnswers;
-                                    // totalNumberOfAsnwers += i.answers.length;
-                                  }
-                                  double avrage =
-                                      correctAnswers / quizzes[index].questions.length;
-                      // List<int> scores = [];
-                      // for (var i in quizzes[index].userResults) {
-                      //   if (quizzes[index].userResults.length != 0) {
-                      //     scores.add(i.numberOfCorrectAnswers);
-                      //   }
-                      // }
-                      // double scoreAvrage = ((scores
-                      //         .reduce((value, element) => value + element)
-                      //         .toDouble()) /
-                      //     scores.length);
+                      var counter = 0;
+                      if (quizzes[0].userResults != null && quizzes[0].userResults.length != 0){
+                        
+    for (var i in quizzes[0].userResults) {
+      counter += i.numberOfCorrectAnswers;
+    }
+
+                      }
                       return GestureDetector(
                         onTap: () {
                           Navigator.pushReplacement(
@@ -146,13 +157,14 @@ class _QuizzesPageState extends State<QuizzesPage> {
                                             ),
                                             onPressed: () {
                                               Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          QuizAnswers(
-                                                            quiz:
-                                                                quizzes[index],
-                                                          )));
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      QuizAnswers(
+                                                    quiz: quizzes[index],
+                                                  ),
+                                                ),
+                                              );
                                             })
                                       ],
                                     ),
@@ -167,7 +179,7 @@ class _QuizzesPageState extends State<QuizzesPage> {
                                           TextSpan(
                                             text:
                                                 // '${quizzes[index].userResults.length}',
-                                                '${quizzes[index].userResults.length}',
+                                                '${quizzes[0].userResults.length}',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -183,7 +195,8 @@ class _QuizzesPageState extends State<QuizzesPage> {
                                         ),
                                         children: <TextSpan>[
                                           TextSpan(
-                                            text: '$avrage',
+                                            text:
+                                                '${counter / quizzes[0].questions.length}',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -194,9 +207,11 @@ class _QuizzesPageState extends State<QuizzesPage> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -219,22 +234,24 @@ class _QuizzesPageState extends State<QuizzesPage> {
 
   Future<double> _readAvrage() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'number_of_correctAnswers:';
+    final key = 'number_of_avrage:';
     final value = prefs.getDouble(key) ?? 0;
     print('read: $value');
     return value;
   }
 
-  _save({int number_of_attempts, double number_of_correctAnswers}) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'number_of_attempts';
-    final value = number_of_attempts;
-    final key2 = 'number_of_correctAnswers';
-    final value2 = number_of_correctAnswers;
-    prefs.setInt(key, value);
-    prefs.setDouble(key2, value2);
-    print('saved $value');
-  }
+  // _save(
+  //     {List<String> number_of_attempts,
+  //     List<String> number_of_correctAnswers}) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final key = 'number_of_attempts';
+  //   final value = number_of_attempts;
+  //   final key2 = 'number_of_correctAnswers';
+  //   final value2 = number_of_correctAnswers;
+  //   prefs.setStringList(key, value);
+  //   prefs.setStringList(key2, value2);
+  //   print('saved $value');
+  // }
   // _read() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   final key = 'my_int_key';
@@ -242,11 +259,18 @@ class _QuizzesPageState extends State<QuizzesPage> {
   //   print('read: $value');
   // }
 
-  // _save() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'statics';
-  //   final value = ['${.userResults.length}', 'cow', 'sheep'];
-  //   prefs.setStringList(key, value);
-  //   print('saved $value');
-  // }
+//   _save() async {
+//     var counter = 0;
+//     for (var i in quizzes[0].userResults) {
+//       counter += i.numberOfCorrectAnswers;
+//     }
+//     final prefs = await SharedPreferences.getInstance();
+//     final key = 'number_of_attempts';
+//     final value = quizzes[0].userResults.length;
+//     final key2 = 'number_of_avrage';
+//     final value2 = counter / quizzes[0].questions.length;
+//     prefs.setInt(key, value);
+//     prefs.setDouble(key2, value2);
+//     print('saved $value');
+//   }
 }

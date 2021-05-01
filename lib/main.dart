@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizme/quizzes/create/create_scrren.dart';
-import 'package:quizme/stopwatch.dart';
-import 'analytics/analytics_screen.dart';
 import 'quizzes/quizzes_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(MyApp());

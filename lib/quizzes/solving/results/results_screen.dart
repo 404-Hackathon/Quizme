@@ -19,7 +19,6 @@ class _ResultPageState extends State<ResultPage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     double percent = (widget.results.numberOfCorrectAnswers /
             widget.results.answers.length) *

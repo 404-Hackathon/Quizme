@@ -6,7 +6,6 @@ import 'package:group_button/group_button.dart';
 import 'package:quizme/quizzes/quizzes_screen.dart';
 import 'package:quizme/quizzes/solving/results/results_screen.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class QuizPage extends StatefulWidget {
@@ -30,7 +29,6 @@ class _QuizPageState extends State<QuizPage> {
     return await cache.play("sound.mp3");
   }
 
-  final _isHours = true;
 
   final StopWatchTimer _stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
@@ -265,19 +263,18 @@ class _QuizPageState extends State<QuizPage> {
                                             numberOfCorrectAnswers: counter,
                                             totalTime: seconds));
                                   });
-
-                                  int correctAnswers = 0;
+                                  // int correctAnswers = 0;
                                   // int totalNumberOfAsnwers = 0;
-                                  for (var i in quiz.userResults) {
-                                    correctAnswers += i.numberOfCorrectAnswers;
-                                    // totalNumberOfAsnwers += i.answers.length;
-                                  }
-                                  double avrage =
-                                      correctAnswers / quiz.questions.length;
-                                  _save(
-                                      number_of_attempts:
-                                          quiz.userResults.length,
-                                      number_of_correctAnswers: avrage);
+                                  // for (var i in quiz.userResults) {
+                                  //   // correctAnswers += i.numberOfCorrectAnswers;
+                                  //   // totalNumberOfAsnwers += i.answers.length;
+                                  // }
+                                  // double avrage =
+                                  //     correctAnswers / quiz.questions.length;
+                                  // _save(
+                                  //     number_of_attempts:
+                                  //         quiz.userResults.length,
+                                  //     number_of_correctAnswers: avrage);
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) {
                                     return ResultPage(
@@ -305,14 +302,14 @@ class _QuizPageState extends State<QuizPage> {
 
   
 
-  _save({int number_of_attempts, double number_of_correctAnswers}) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'number_of_attempts';
-    final value = number_of_attempts;
-    final key2 = 'number_of_correctAnswers';
-    final value2 = number_of_correctAnswers;
-    prefs.setInt(key, value);
-    prefs.setDouble(key2, value2);
-    print('saved $value');
-  }
+  // _save({int number_of_attempts, double number_of_correctAnswers}) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final key = 'number_of_attempts';
+  //   final value = number_of_attempts;
+  //   final key2 = 'number_of_correctAnswers';
+  //   final value2 = number_of_correctAnswers;
+  //   prefs.setInt(key, value);
+  //   prefs.setDouble(key2, value2);
+  //   print('saved $value');
+  // }
 }

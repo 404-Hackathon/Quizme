@@ -29,12 +29,12 @@ class _AnalyticsStatePage extends State<AnalyticsPage> {
               for (var i in quiz.userResults) {
                 scores.add(i.numberOfCorrectAnswers);
               }
-              double RawScoreAvrage = ((scores
+              double rawScoreAvrage = ((scores
                       .reduce((value, element) => value + element)
                       .toDouble()) /
                   scores.length);
 
-              String convertToString = RawScoreAvrage.toStringAsFixed(2);
+              String convertToString = rawScoreAvrage.toStringAsFixed(2);
               double scoreAvrage = double.parse(convertToString);
 
               return ExpandablePanel(
