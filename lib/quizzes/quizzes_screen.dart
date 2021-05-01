@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:quizme/quiz.dart';
 import 'package:quizme/quizzes/create/create_scrren.dart';
+import 'package:quizme/quizzes/quiz_answers.dart';
 import 'package:quizme/quizzes/solving/solve_screen.dart';
 
 class QuizzesPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _QuizzesPageState extends State<QuizzesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
@@ -43,7 +45,6 @@ class _QuizzesPageState extends State<QuizzesPage> {
           )
         ],
       ),
-      backgroundColor: Colors.grey[150],
       body: SafeArea(
         child: Center(
           child: Container(
@@ -73,7 +74,9 @@ class _QuizzesPageState extends State<QuizzesPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QuizPage(quiz: quizzes[index],),
+                              builder: (context) => QuizPage(
+                                quiz: quizzes[index],
+                              ),
                             ),
                           );
                         },
@@ -86,14 +89,32 @@ class _QuizzesPageState extends State<QuizzesPage> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      quizzes[index].name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24),
+                                    child: Hero(
+                                      tag: 'Title',
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          quizzes[index].name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  Spacer()
+                                  Spacer(),
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.question_answer_rounded,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    QuizAnswers(quiz: quizzes[index],)));
+                                      })
                                 ],
                               ),
                               decoration: BoxDecoration(

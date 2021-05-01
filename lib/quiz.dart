@@ -15,15 +15,29 @@ class Questions {
 }
 
 class Results {
-  final String totalTime;
+  final int totalTime;
   final int numberOfCorrectAnswers;
+  // final int avrageQuestionTime;
   final List<Answer> answers;
+  List<Questions> questions = [];
 
-  Results({this.totalTime, this.numberOfCorrectAnswers, this.answers});
+  Results(
+      {this.questions,
+      // this.avrageQuestionTime,
+      this.totalTime,
+      this.numberOfCorrectAnswers,
+      this.answers});
+
+  int avrageTime() {
+    int sum = answers.fold(0, (p, c) => p + c.time);
+    return (sum / answers.length).round();
+  }
 }
-
+/*
+int minutes = (time / 60).truncate();
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');*/
 class Answer {
-  final String time;
+  final int time;
   final bool correct;
   final String answer;
 
@@ -54,12 +68,12 @@ List<Questions> _questions = [
 List<Results> testQuizResults = [
   Results(
     answers: [
-      Answer(answer: '404', correct: true, time: '1:40'),
-      Answer(answer: 'not 404', correct: false, time: '1:00'),
+      Answer(answer: '404', correct: true, time: 120),
+      Answer(answer: 'not 404', correct: false, time: 60),
     ],
   ),
 ];
 
-List<Quiz> quizzes = [
-  Quiz(name: 'Test 1', questions: _questions, id: 1)
-];
+List<Quiz> quizzes = [Quiz(name: 'Test 1', questions: _questions, id: 1)];
+// 
+// List<Quiz> quizzes = [];

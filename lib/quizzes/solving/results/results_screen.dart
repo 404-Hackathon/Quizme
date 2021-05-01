@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:quizme/quiz.dart';
 import 'package:quizme/quizzes/quizzes_screen.dart';
-
+import 'package:quizme/quizzes/solving/show%20answers/show_answers.dart';
 import 'circle.dart';
 
 class ResultPage extends StatefulWidget {
-  ResultPage({Key key, @required this.results}) : super(key: key);
+  ResultPage({Key key, @required this.results, this.quiz}) : super(key: key);
   final Results results;
+  final Quiz quiz;
   @override
   _ResultPageState createState() => _ResultPageState();
 }
@@ -65,9 +66,88 @@ class _ResultPageState extends State<ResultPage>
               ),
               Spacer(),
               Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: Column(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Total Correct: ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  '${widget.results.numberOfCorrectAnswers} / ${widget.results.answers.length}',
+                              style: new TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Total Time: ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  '${((widget.results.totalTime / 60).truncate() % 60).toString().padLeft(2, '0')}:${widget.results.totalTime}',
+                              style: new TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Avrage Time: ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              // text: widget.results.avrageTime().toString(),
+                              text:
+                                  '${((widget.results.avrageTime() / 60).truncate() % 60).toString().padLeft(2, '0')}:${widget.results.avrageTime()}',
+                              style: new TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Avrage Correct Answers: ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              // text: widget.results.avrageTime().toString(),
+                              text:
+                                  (widget.results.numberOfCorrectAnswers / widget.results.answers.length).round() == 1 ? '100%' : '${(widget.results.numberOfCorrectAnswers / widget.results.answers.length).round()}',
+                              style: new TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Spacer(),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ShowAnswers(results: widget.results, quiz: widget.quiz,)));
+                  },
                   child: Container(
                     height: 50,
                     // width: 200,
@@ -75,7 +155,7 @@ class _ResultPageState extends State<ResultPage>
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Show More Results!",
+                          "Your Answers!",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -85,8 +165,11 @@ class _ResultPageState extends State<ResultPage>
                       ),
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
                   ),
                 ),
               ),
