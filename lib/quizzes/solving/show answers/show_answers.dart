@@ -20,18 +20,12 @@ class _ShowAnswersState extends State<ShowAnswers> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Hero(
-          tag: 'Title',
-          child: Material(
-            color: Colors.transparent,
-            child: Text(
-              quiz.name,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                // fontSize: 36,
-              ),
-            ),
+        title: Text(
+          quiz.name,
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            // fontSize: 36,
           ),
         ),
         leading: IconButton(
@@ -76,7 +70,7 @@ class _ShowAnswersState extends State<ShowAnswers> {
                                       ? Icons.check_rounded
                                       : Icons.clear_rounded,
                                   size: 36,
-                                  color: result.answers[qIndex].correct != question.options[option[index]]
+                                  color: result.answers[qIndex].correct == question.options[option[index]]
                                       ? Colors.green[400]
                                       : Colors.redAccent,
                                 ),

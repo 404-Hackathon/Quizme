@@ -17,18 +17,12 @@ class _QuizAnswersState extends State<QuizAnswers> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Hero(
-          tag: 'Title',
-          child: Material(
-            color: Colors.transparent,
-            child: Text(
-              quiz.name,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                // fontSize: 36,
-              ),
-            ),
+        title: Text(
+          quiz.name,
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            // fontSize: 36,
           ),
         ),
         leading: IconButton(

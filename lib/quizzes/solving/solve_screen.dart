@@ -6,6 +6,7 @@ import 'package:group_button/group_button.dart';
 import 'package:quizme/quizzes/quizzes_screen.dart';
 import 'package:quizme/quizzes/solving/results/results_screen.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class QuizPage extends StatefulWidget {
@@ -71,18 +72,12 @@ class _QuizPageState extends State<QuizPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Hero(
-          tag: 'Title',
-          child: Material(
-            color: Colors.transparent,
-            child: Text(
-              quiz.name,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                // fontSize: 36,
-              ),
-            ),
+        title: Text(
+          quiz.name,
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            // fontSize: 36,
           ),
         ),
         actions: [
@@ -243,10 +238,11 @@ class _QuizPageState extends State<QuizPage> {
                   qIndex == quiz.questions.length - 1
                       ? StreamBuilder<int>(
                           stream: _stopWatchTimer.rawTime,
-                initialData: _stopWatchTimer.rawTime.valueWrapper?.value,
-                builder: (context, snap) {
-                  final value = snap.data;
-                  final seconds = StopWatchTimer.getRawSecond(value);
+                          initialData:
+                              _stopWatchTimer.rawTime.valueWrapper?.value,
+                          builder: (context, snap) {
+                            final value = snap.data;
+                            final seconds = StopWatchTimer.getRawSecond(value);
                             return Positioned(
                               bottom: 20,
                               right: 20,
@@ -257,7 +253,9 @@ class _QuizPageState extends State<QuizPage> {
 
                                   for (var i in answers) {
                                     if (i.correct) {
-                                      counter += 1;
+                                      setState(() {
+                                        counter += 1;
+                                      });
                                     }
                                   }
                                   setState(() {
@@ -267,14 +265,28 @@ class _QuizPageState extends State<QuizPage> {
                                             numberOfCorrectAnswers: counter,
                                             totalTime: seconds));
                                   });
+
+                                  int correctAnswers = 0;
+                                  // int totalNumberOfAsnwers = 0;
+                                  for (var i in quiz.userResults) {
+                                    correctAnswers += i.numberOfCorrectAnswers;
+                                    // totalNumberOfAsnwers += i.answers.length;
+                                  }
+                                  double avrage =
+                                      correctAnswers / quiz.questions.length;
+                                  _save(
+                                      number_of_attempts:
+                                          quiz.userResults.length,
+                                      number_of_correctAnswers: avrage);
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) {
                                     return ResultPage(
                                       results: Results(
-                                          answers: answers,
-                                          numberOfCorrectAnswers: counter,
-                                          totalTime: seconds,),
-                                          quiz: widget.quiz,
+                                        answers: answers,
+                                        numberOfCorrectAnswers: counter,
+                                        totalTime: seconds,
+                                      ),
+                                      quiz: widget.quiz,
                                     );
                                   }));
                                 },
@@ -289,5 +301,18 @@ class _QuizPageState extends State<QuizPage> {
         }),
       ),
     );
+  }
+
+  
+
+  _save({int number_of_attempts, double number_of_correctAnswers}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'number_of_attempts';
+    final value = number_of_attempts;
+    final key2 = 'number_of_correctAnswers';
+    final value2 = number_of_correctAnswers;
+    prefs.setInt(key, value);
+    prefs.setDouble(key2, value2);
+    print('saved $value');
   }
 }
