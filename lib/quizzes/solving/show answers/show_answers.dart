@@ -62,20 +62,33 @@ class _ShowAnswersState extends State<ShowAnswers> {
                           children:
                               List.generate(question.options.length, (index) {
                             List option = question.options.keys.toList();
+                            // option.sort();
+                            // result.answers.sort();
+                            List idk = result.answers;
+                            print(idk[qIndex].answer);
+                            // print(result.answers[qIndex].answer);
+                            // print(idk[qIndex].options[result.answers[qIndex].answer]);
+                            // print(question.options[result.answers[qIndex].answer]);
+                            print(option[index] == idk[qIndex].answer);
                             return Row(
                               children: [
                                 Icon(
-                                  result.answers[qIndex].correct == question.options[option[index]]
+                                  question.options[option[
+                                          index]] /*result.answers[qIndex].correct &&  question.options[option[index]]*/
                                       ? Icons.check_rounded
                                       : Icons.clear_rounded,
                                   size: 36,
-                                  color: result.answers[qIndex].correct == question.options[option[index]]
+                                  color: question.options[option[
+                                          index]] /*result.answers[qIndex].correct &&  question.options[option[index]]*/
                                       ? Colors.green[400]
                                       : Colors.redAccent,
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: result.answers[qIndex].answer == option[index] ? Colors.orangeAccent : Colors.transparent,
+                                    color: option[index] ==
+                                            result.answers[qIndex].answer
+                                        ? Colors.orangeAccent
+                                        : Colors.transparent,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
                                   ),

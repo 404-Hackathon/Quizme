@@ -86,6 +86,9 @@ class _CreatePageState extends State<CreatePage> {
                         },
                         decoration: new InputDecoration.collapsed(
                           hintText: 'Insert your question',
+                          hintStyle: TextStyle(
+                            color: Colors.black.withOpacity(0.5)
+                          )
                         ),
                       ),
                       Spacer(),
@@ -294,7 +297,7 @@ class AnsewrsCheckBox extends StatelessWidget {
         ),
         decoration: new InputDecoration.collapsed(
             hintText: 'Insert an answer',
-            hintStyle: TextStyle(color: Colors.black.withOpacity(0.8))),
+            hintStyle: TextStyle(color: Colors.black.withOpacity(0.5))),
         // validator: (value) {
         //   if (value == null || value.isEmpty) {
         //     return 'Please enter some text';
